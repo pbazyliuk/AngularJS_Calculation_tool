@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="calculator">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Calculation tool</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.js"></script>
+    <script src="app.js">
+    </script>
+</head>
+
+<body>
+    <form action="" ng-controller="CalculatorController">
+        <div>
+            <div>
+                <label for="cake_name">Назва торту *</label>
+            </div>
+            <select ng-init="$scope.cakes[0].name" ng-options="cake as cake.name for cake in cakes track by cake.price" ng-model="selectedCake" ng-disabled="fieldDisabled" ng-change="changeCake()" required>
+            </select>
+            {{selectedCake.price}}
+        </div>
+        <div>
+            <label for="cake_ordering">
+                <input type="checkbox" id="cake_ordering" ng-click="fieldDisabled = !fieldDisabled">Торт на замовлення</label>
+        </div>
+        <div>
+            <select ng-options="azyme as azyme.name for azyme in azymes track by azyme.price" ng-model="selectedAzyme" ng-disabled="!fieldDisabled" ng-change="calculate()">>
+            </select>{{selectedAzyme.price}}
+            <select ng-options="cream as cream.name for cream in creams track by cream.price" ng-model="selectedCream" ng-disabled="!fieldDisabled">
+            </select>{{selectedCream.price}}
+            <select ng-options="cover as cover.name for cover in covers track by cover.price" ng-model="selectedCover" ng-disabled="!fieldDisabled">
+            </select>{{selectedCover.price}}
+        </div>
+        <div>
+            <input type="checkbox" id="cake_desing" ng-model="confirmed" ng-change="change()">
+            <label for="cake_desing">Розробка унікального дизайну</label>
+            {{design}}
+        </div>
+        <div>
+            <input type="checkbox" id="cake_term" ng-model="confirmed1" ng-change="change2()">
+            <label for="cake_term">Терміновість 2 дні</label>
+            <img src="http://placehold.it/12x12" alt=""> {{term}}
+        </div>
+        <div>
+            <label for="cake_name">Вага, кг *</label>
+        </div>
+        <input type="number" ng-model="weight" min="1" max="5">
+        <div>
+            <a href="" ng-click="calculate1()">Calc</a> {{sum2 | currency: "грн "}}
+        </div>
+    </form>
+</body>
+
+</html>

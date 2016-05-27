@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="calculator">
+<head>
+	<meta charset="UTF-8">
+	<title>Calculation tool</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.js"></script>
+	<script>
+    var calculator = angular.module('calculator', []);
+
+    calculator.controller('CalculatorController', ['$scope', function($scope) {
+
+
+
+        
+
+        /*$scope.cakes = [
+        {
+            NumberCake: 0,
+            NameCake: 'Оберіть'
+        },
+        {
+            NumberCake: 100,
+            NameCake: 'Мокка'
+        }, {
+            NumberCake: 125,
+            NameCake: 'Туринський'
+        }, {
+            NumberCake: 150,
+            NameCake: 'Венеціанська карамель'
+        }];*/
+        $scope.cakes = [{name: 'Оберіть торт',
+        price: 0
+    },
+    {
+        name: 'мокка',
+        price: 100
+    }, {
+        name: 'венеціанська карамель',
+        price: 200
+    }, {
+        name: 'туринський',
+        price: 250
+    }];
+	
+	
+    $scope.selectedCake = $scope.cakes[0];
+
+       
+
+        /*$scope.azymes = [{
+            NumberAzyme: 1,
+            NameAzyme: 'бісквітні'
+        }, {
+            NumberAzyme: 2,
+            NameAzyme: 'пісочні'
+        }, {
+            NumberAzyme: 3,
+            NameAzyme: 'білкові'
+        }];
+
+        $scope.creams = [{
+            NumberCream: 1,
+            NameCream: 'масляний'
+        }, {
+            NumberCream: 2,
+            NameCream: 'шоколадний'
+        }, {
+            NumberCream: 3,
+            NameCream: 'вершковий'
+        }];
+
+        $scope.covers = [{
+            NumberCover: 1,
+            NameCover: 'мастика'
+        }, {
+            NumberCover: 2,
+            NameCover: 'шоколад'
+        }, {
+            NumberCover: 3,
+            NameCover: 'глазурь'
+        }];
+*/		
+$scope.azymes = [
+	{
+        name: 'оберіть',
+        price: 0
+    },
+	{
+        name: 'бісквітні',
+        price: 50
+    }, {
+        name: 'пісочні',
+        price: 30
+    }, {
+        name: 'білкові',
+        price: 40
+    }];
+
+    $scope.selectedAzyme = $scope.azymes[0];
+
+
+
+    $scope.creams = [
+    {
+        name: 'оберіть',
+        price: 0
+    },
+    {
+        name: 'вершковий',
+        price: 50
+    }, {
+        name: 'масляний',
+        price: 30
+    }, {
+        name: 'шоколадний',
+        price: 40
+    }];
+
+    $scope.selectedCream = $scope.creams[0];
+
+
+    $scope.covers = [
+    {
+        name: 'оберіть',
+        price: 0
+    },
+    {
+        name: 'мастика',
+        price: 50
+    }, {
+        name: 'шоколад',
+        price: 40
+    }, {
+        name: 'глазурь',
+        price: 30
+    }];
+
+    $scope.selectedCover = $scope.covers[0];
+       
+			$scope.fieldDisabled = false;
+/*
+			if($scope.fieldDisabled === true) {
+				NumberCake =0;
+			}*/
+
+	$scope.design = 0;
+    $scope.change = function() {
+    	if($scope.design == 0) {$scope.design = 100}
+    	else {$scope.design = 0}
+    } 
+	
+	$scope.term = 1;
+	$scope.change2 = function() {
+    	if($scope.term == 1) {$scope.term = 1.2}
+    	else {$scope.term = 1}
+    } 
+	
+	$scope.change3 = function() {
+    	if($scope.term == 1) {$scope.term = 1.2}
+    	else {$scope.term = 1}
+    } 
+	
+
+    $scope.weight = 1;
+
+    $scope.changeCake = function() {
+    	$scope.selectedCake.NumberCake;
+
+    }
+       
+    $scope.calculate1 = function() {
+    	$scope.sum = ($scope.selectedCake.price === 0) ? ($scope.selectedAzyme.price +
+    		$scope.selectedCream.price+$scope.selectedCover.price) : $scope.selectedCake.price;
+    	$scope.sum2 = (($scope.sum * $scope.weight) +  $scope.design)*$scope.term;
+    } 
+    }]);
+    </script>
+</head>
+<body>
+	<form action="" ng-controller="CalculatorController">
+		<div >
+             <!--<label for="cake_type">Назва торту <span>*</span>
+                <div >
+                    <select name="cake" id="cake_type" style="width: 220px;" 
+                    ng-disabled="fieldDisabled"
+                					ng-model="selectedCake"
+                					
+                    ng-options="cake.NumberCake as cake.NameCake for cake in cakes" >
+                        <option value="">Варіант торту</option>
+                    </select>
+                    {{selectedCake.NumberCake}}
+                </div>
+                            </label> -->
+            <!-- <span ng-show="myForm.service_id.$error.required">Select service</span> -->
+            <div>
+                <label for="cake_name">Назва торту *</label>
+            </div>
+            
+            <select 
+            ng-init="$scope.cakes[0].name"
+            ng-options="cake as cake.name for cake in cakes track by cake.price" 
+            ng-model="selectedCake"
+            ng-disabled="fieldDisabled"
+            ng-change="changeCake()"
+            required>
+            </select>
+            {{selectedCake.price}}
+        </div>
+
+        <!-- <div>
+            <input type="checkbox" id="cake_order" 
+            ng-click="fieldDisabled = !fieldDisabled"><label for="cake_order">Торт на замовлення <span>*</span>
+                <div>
+                    <select name="azyme" style="width: 220px;" 
+        					ng-disabled="!fieldDisabled"
+        					
+                    ng-model="NumberAzyme" ng-options="azyme.NumberAzyme as azyme.NameAzyme for azyme in azymes" >
+                        <option value="">Варіант коржів</option>
+                    </select>
+                    {{NumberAzyme}}
+                    <p class="error validationerror"
+            		ng-show="myForm.azyme.$invalid && myForm.azyme.$touched">Fill the cake field!</p>
+        
+                    <select name="cream" id="cream_order" style="width: 220px;" 
+        					ng-disabled="!fieldDisabled"
+        					
+                    ng-model="NumberCream" ng-options="cream.NumberCream as cream.NameCream for cream in creams" >
+                        <option value="">Варіант кремів</option>
+                    </select>
+                    {{NumberCream}}
+                    <p class="error validationerror"
+            		ng-show="myForm.cream.$invalid && myForm.cream.$touched">Fill the cream field!</p>
+        
+                    <select name="cover" id="cake_order" style="width: 220px;" 
+        					ng-disabled="!fieldDisabled"
+        					
+                    ng-model="NumberCover" ng-options="cover.NumberCover as cover.NameCover for cover in covers" >
+                        <option value="">Варіант покриття</option>
+                    </select>
+                    {{NumberCover}}
+                    <p class="error validationerror"
+            		ng-show="myForm.cover.$invalid && myForm.cover.$touched">Fill the cover field!</p>
+                </div>
+        
+            </label>
+            <span ng-show="myForm.service_id.$error.required">Select service</span>
+        </div> -->
+		<div>
+                <label for="cake_ordering">
+                    <input type="checkbox" id="cake_ordering" 
+                    ng-click="fieldDisabled = !fieldDisabled">Торт на замовлення</label>
+            </div>
+            <div>
+                <select                 
+                    ng-options="azyme as azyme.name for azyme in azymes track by azyme.price" 
+                    ng-model="selectedAzyme"
+                    ng-disabled="!fieldDisabled"
+                    ng-change="calculate()">>
+                </select>{{selectedAzyme.price}}
+                
+               <select 
+                    ng-options="cream as cream.name for cream in creams track by cream.price"  
+                   ng-model="selectedCream" 
+                   ng-disabled="!fieldDisabled">
+               </select>{{selectedCream.price}}
+            
+               <select 
+                   ng-options="cover as cover.name for cover in covers track by cover.price"  
+                   ng-model="selectedCover" 
+                   ng-disabled="!fieldDisabled">
+               </select>{{selectedCover.price}}
+            </div>
+        <div>
+                <input type="checkbox" id="cake_desing" 
+                ng-model="confirmed" ng-change="change()">
+                <label for="cake_desing">Розробка унікального дизайну</label>
+				{{design}}
+            </div>
+            <div>
+                <input type="checkbox" id="cake_term" ng-model="confirmed1" ng-change="change2()">
+                <label for="cake_term">Терміновість 2 дні</label>
+                <img src="http://placehold.it/12x12" alt="">
+                  {{term}}
+            </div>
+			<div>
+                <label for="cake_name">Вага, кг *</label>
+            </div>
+            <input type="number" ng-model="weight" min="1" max="5" >
+            <div>
+            <a href="" ng-click="calculate1()">Calc</a> {{sum2 | currency: "грн "}}
+            </div>
+	</form>
+</body>
+</html>
